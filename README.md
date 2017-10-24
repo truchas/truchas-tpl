@@ -8,6 +8,13 @@ you can build them manually (or obtain them otherwise); you don't have to
 make this system work.  All that matters is that the Truchas cmake step can
 find them.
 
+#### Supported compilers
+Although individually the TPLs can be built with any number of different
+compilers, it is strongly recommended that they be built with the same
+compilers used to build Truchas (the Fortran compiler vendor *must* be the
+same). Please see the BUILDING file in the Truchas distribution for a list
+of compilers supported by Truchas.
+
 ### Quick Start Guide
 The packages that can be built are HDF5, NetCDF, Exodus, HYPRE, Petaca, YAJL,
 and SWIG.  Compressed tarfiles of their source distributions can be found in
