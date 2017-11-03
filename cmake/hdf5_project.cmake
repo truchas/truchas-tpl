@@ -25,11 +25,11 @@ else()
   else()
     set(hdf5_shlib_flag "--enable-static" "--disable-shared")
   endif()
-  set(HDF5_VERSION "1.8.11")
+  set(HDF5_VERSION "1.8.19")
   ExternalProject_Add(hdf5
     PREFIX hdf5
     URL ${TARFILE_DIR}/hdf5-${HDF5_VERSION}.tar.gz
-    URL_MD5 1a4cc04f7dbe34e072ddcf3325717504
+    URL_MD5 7f568e2464d4ab0a74d16b23956d900b
     CONFIGURE_COMMAND <SOURCE_DIR>/configure
                       CC=${MPI_C_COMPILER}
                       CFLAGS=${cflags}
