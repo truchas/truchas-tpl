@@ -1,6 +1,6 @@
 if(SEARCH_FOR_NETCDF)
   message(STATUS "Searching for a suitable NetCDF library ...")
-  find_package(NetCDF "4.1.3")
+  find_package(NetCDF "4.3")
   if(NETCDF_FOUND)
     if(NOT NETCDF_HAS_NC4)
       message(STATUS "Found unsuitable NetCDF without required netcdf-4 feature")
@@ -13,7 +13,7 @@ if(NETCDF_FOUND)
   list(APPEND projects_found "NetCDF")
 else()
   list(APPEND projects_to_build "NetCDF")
-  set(NETCDF_VERSION "4.1.3")
+  set(NETCDF_VERSION "4.4.1.1")
   if(BUILD_SHARED_LIBS)
     set(netcdf_shlib_flag "--enable-shared" "--disable-static")
   else()
@@ -34,7 +34,7 @@ else()
     DEPENDS hdf5
     PREFIX netcdf
     URL ${TARFILE_DIR}/netcdf-${NETCDF_VERSION}.tar.gz
-    URL_MD5 ead16cb3b671f767396387dcb3c1a814
+    URL_MD5 503a2d6b6035d116ed53b1d80c811bda
     CONFIGURE_COMMAND <SOURCE_DIR>/configure
                       CC=${CMAKE_C_COMPILER}
                       CFLAGS=${netcdf_cflags}
@@ -42,11 +42,11 @@ else()
                       --enable-netcdf-4
                       --disable-examples
                       --disable-dap
-                      --disable-cxx
-                      --disable-fortran
+                      --disable-fsync
+                      --disable-cdmremote
                       ${netcdf_shlib_flag}
                       --prefix=${CMAKE_INSTALL_PREFIX}
-    PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/netcdf-4.1.3.patch
+    PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/netcdf-large-model.patch
     BUILD_COMMAND "$(MAKE)"
     BUILD_IN_SOURCE 1
     LOG_UPDATE 1
