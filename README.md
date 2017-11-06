@@ -70,7 +70,8 @@ ones), here are some points to keep in mind.  Also look at the files in the
 
 #### NetCDF
 * Use `--with-netcdf-4`
-* Only need the C interface (`--disable-fortran --disable-cxx`)
+* We only use the C interface; neither the separately-distributed Fortran
+  nor C++ libraries are needed.
 
 #### Exodus
 * We use and test with a relative old version 5.14.  There are reported
@@ -79,11 +80,10 @@ ones), here are some points to keep in mind.  Also look at the files in the
 #### HYPRE
 * Only the C interface is needed (`--disable-fortran`)
 * Use `--with-MPI`.
-* Use `--without-fei`; it is not needed and has compilation problems.
-* We "require" an older 2.6.0b version, but newer version really should work
-  too, but small numerical differences are producing enough variation in the
-  output to cause some regression tests to report failures, and we haven't
-  had the time to evaluate them yet.
+* Use `--without-fei`; it is not needed and may have compilation problems.
+* Version 2.11 or newer is required (we currently use 2.11.2). Note that
+  numerical differences in different versions may produce enough variation
+  in the output to cause some regression tests to report failures.
 
 #### SWIG
 * We require an old version 2
