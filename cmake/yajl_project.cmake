@@ -7,6 +7,7 @@ endif()
 
 if(YAJL_FOUND)
   list(APPEND projects_found "YAJL")
+  add_custom_target(yajl)
 else()
   list(APPEND projects_to_build "YAJL")
   set(YAJL_VERSION "2.1.0")
