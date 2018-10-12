@@ -10,8 +10,8 @@ else()
   externalproject_add(petaca
     DEPENDS yajl
     PREFIX petaca
-    URL ${TARFILE_DIR}/petaca-487aea2.tar.gz
-    URL_MD5 6c492fb5d863a011935d06fea3593bcf
+    URL ${TARFILE_DIR}/petaca-e7d610f.tar.gz
+    URL_MD5 9791c7b3cdd1c26bfef7e778d87cb389
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D CMAKE_Fortran_COMPILER:PATH=${CMAKE_Fortran_COMPILER}
                -D CMAKE_Fortran_FLAGS:STRING=${CMAKE_Fortran_FLAGS}
