@@ -81,7 +81,7 @@ ones), here are some points to keep in mind.  Also look at the files in the
 * Only the C interface is needed (`--disable-fortran`)
 * Use `--with-MPI`.
 * Use `--without-fei`; it is not needed and may have compilation problems.
-* Version 2.15 or newer is required (we currently use 2.15). Note that
+* Version 2.15 or newer is required (we currently use 2.15.1). Note that
   numerical differences in different versions may produce enough variation
   in the output to cause some regression tests to report failures.
 
