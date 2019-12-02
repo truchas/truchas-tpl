@@ -10,17 +10,18 @@ if(PORTAGE_FOUND)
   add_custom_target(portage)
 else()
   list(APPEND projects_to_build "Portage")
-  set(PORTAGE_VERSION "2.2.0")
+  set(PORTAGE_VERSION "2.2.3")
   externalproject_add(portage
     PREFIX portage
-    URL ${TARFILE_DIR}/portage-${PORTAGE_VERSION}.tar.gz
-    URL_MD5 9c2a2c4ab176e191ac6425c5d387031d
+    URL ${TARFILE_DIR}/portage_v${PORTAGE_VERSION}.tar.gz
+    URL_MD5 5ca2bfcf4d56ffcb2f5b73719ed0b23f
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D CMAKE_CXX_COMPILER:PATH=${CMAKE_CXX_COMPILER}
                -D CMAKE_C_COMPILER:PATH=${CMAKE_C_COMPILER}
                -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
                -D CMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}
                -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
+    PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/portage-v2.2.3.patch
     LOG_DOWNLOAD 1
     LOG_CONFIGURE 1
     LOG_BUILD 1
