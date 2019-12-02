@@ -13,8 +13,8 @@ else()
   set(PORTAGE_VERSION "2.2.0")
   externalproject_add(portage
     PREFIX portage
-    URL ${TARFILE_DIR}/portage-${PORTAGE_VERSION}.tar.gz
-    URL_MD5 9c2a2c4ab176e191ac6425c5d387031d
+    URL ${TARFILE_DIR}/portage_v${PORTAGE_VERSION}.tar.gz
+    URL_MD5 e8f092365f69edd6016304736fc8dc3f
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D CMAKE_CXX_COMPILER:PATH=${CMAKE_CXX_COMPILER}
                -D CMAKE_C_COMPILER:PATH=${CMAKE_C_COMPILER}
