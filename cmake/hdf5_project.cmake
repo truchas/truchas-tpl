@@ -4,7 +4,7 @@ if(SEARCH_FOR_HDF5)
     set(HDF5_USE_STATIC_LIBRARIES True)
   endif()
   set(HDF5_PREFER_PARALLEL True)
-  find_package(HDF5 "1.8.8" COMPONENTS C HL)
+  find_package(HDF5 "1.10.1" COMPONENTS C HL)
   if(HDF5_FOUND)
     if(NOT HDF5_IS_PARALLEL)
       set(HDF5_FOUND False)
@@ -25,11 +25,11 @@ else()
   else()
     set(hdf5_shlib_flag "--enable-static" "--disable-shared")
   endif()
-  set(HDF5_VERSION "1.10.1")
+  set(HDF5_VERSION "1.10.6")
   ExternalProject_Add(hdf5
     PREFIX hdf5
     URL ${TARFILE_DIR}/hdf5-${HDF5_VERSION}.tar.gz
-    URL_MD5 628958679ccd5d9c0939912de082e7fa
+    URL_MD5 37f3089e7487daf0890baf3d3328e54a
     CONFIGURE_COMMAND <SOURCE_DIR>/configure
                       CC=${MPI_C_COMPILER}
                       CFLAGS=${cflags}
