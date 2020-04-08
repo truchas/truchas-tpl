@@ -34,10 +34,10 @@ else()
                -D HDF5_LIBRARY=${hdf5_library}
                -D HDF5HL_LIBRARY=${hdf5hl_library}
                #-D CMAKE_EXE_LINKER_FLAGS=${hdf5_hl_ldflags}
+    PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/exodus-cmake-version.patch
     LOG_DOWNLOAD 1
     LOG_CONFIGURE 1
     LOG_BUILD 1
     LOG_INSTALL 1
   )
 endif()
-
