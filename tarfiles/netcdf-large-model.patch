@@ -14,5 +14,37 @@ diff -ru netcdf-4.4.1.1.orig/include/netcdf.h netcdf-4.4.1.1/include/netcdf.h
 -#define NC_MAX_VAR_DIMS	1024 /**< max per variable dimensions */
 +#define NC_MAX_VAR_DIMS	8 /**< max per variable dimensions */
  /**@}*/
- 
+
  /** This is the max size of an SD dataset name in HDF4 (from HDF4 documentation).*/
+diff -ru netcdf-4.4.1.1.orig/CMakeLists.txt netcdf-4.4.1.1/CMakeLists.txt
+diff -ru netcdf-4.4.1.1.orig/CMakeLists.txt netcdf-4.4.1.1/CMakeLists.txt
+--- netcdf-4.4.1.1.orig/CMakeLists.txt	2016-11-21 12:43:11.000000000 -0700
++++ netcdf-4.4.1.1/CMakeLists.txt	2020-05-08 16:22:59.000000000 -0600
+@@ -76,6 +76,7 @@
+
+ # For CMAKE_INSTALL_LIBDIR
+ INCLUDE(GNUInstallDirs)
++SET(CMAKE_INSTALL_LIBDIR "lib")
+
+ IF(MSVC)
+   SET(GLOBAL PROPERTY USE_FOLDERS ON)
+@@ -644,8 +645,8 @@
+     # Find out if HDF5 was built with parallel support.
+     # Do that by checking for the targets H5Pget_fapl_mpiposx and
+     # H5Pget_fapl_mpio in ${HDF5_LIB}.
+-    CHECK_LIBRARY_EXISTS(hdf5 H5Pget_fapl_mpiposix "" HDF5_IS_PARALLEL_MPIPOSIX)
+-    CHECK_LIBRARY_EXISTS(hdf5 H5Pget_fapl_mpio "" HDF5_IS_PARALLEL_MPIO)
++    CHECK_LIBRARY_EXISTS(${HDF5_C_LIBRARY} H5Pget_fapl_mpiposix "" HDF5_IS_PARALLEL_MPIPOSIX)
++    CHECK_LIBRARY_EXISTS(${HDF5_C_LIBRARY} H5Pget_fapl_mpio "" HDF5_IS_PARALLEL_MPIO)
+     IF(HDF5_IS_PARALLEL_MPIPOSIX OR HDF5_IS_PARALLEL_MPIO)
+       SET(HDF5_PARALLEL ON)
+     ELSE()
+@@ -664,7 +665,7 @@
+     IF(ENABLE_DYNAMIC_LOADING)
+       SET(USE_LIBDL ON CACHE BOOL "")
+     ENDIF()
+-    SET(HDF5_C_LIBRARY hdf5)
++
+   ENDIF(NOT MSVC)
+
+   #Check to see if H5Z_SZIP exists in HDF5_Libraries. If so, we must use szip.
