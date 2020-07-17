@@ -28,6 +28,7 @@ option(SEARCH_FOR_HYPRE "Search for suitable HYPRE library" ON)
 option(SEARCH_FOR_HYPRE "Search for suitable HYPRE library" ON)
 option(SEARCH_FOR_YAJL "Search for suitable YAJL library" ON)
 option(SEARCH_FOR_PETACA "Search for suitable Petaca library" ON)
+option(SEARCH_FOR_CHACO "Search for suitable Chaco library" OFF)
 
 # This really doesn't do anything now.  Originally, only .so were
 # searched for when shared, and only .a when not shared.  This does not
@@ -119,6 +120,7 @@ include(exodus_project)
 include(hypre_project)
 include(yajl_project)
 include(petaca_project)
+include(chaco_project)
 
 # Print a summary of the configuration.
 message(STATUS "")
