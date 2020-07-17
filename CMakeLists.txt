@@ -82,6 +82,10 @@ endmacro()
 # MPI (needed by HYPRE, HDF5)
 find_package(MPI REQUIRED)
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
+endif()
+
 # Gather the C and Fortran flags that would be used by cmake into a single
 # variable.  These will be passed to external project configure scripts.
 set(cflags "${CMAKE_C_FLAGS}")
