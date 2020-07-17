@@ -5,7 +5,6 @@ endif()
 
 if(CHACO_FOUND)
   list(APPEND projects_found "Chaco")
-  add_custom_target(chaco)
 else()
   list(APPEND projects_to_build "Chaco")
   externalproject_add(chaco
