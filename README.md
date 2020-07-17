@@ -8,6 +8,24 @@ you can build them manually (or obtain them otherwise); you don't have to
 make this system work.  All that matters is that the Truchas cmake step can
 find them.
 
+These are the third-party libraries that Truchas requires and where they
+can be obtained. This repository contains tar files of specific versions
+of each as a convenience.
+
+* HDF5: https://www.hdfgroup.org/downloads/hdf5/
+* NetCDF: https://www.unidata.ucar.edu/downloads/netcdf/
+* Exodus: https://github.com/gsjaardema/seacas/
+* Hypre: https://github.com/hypre-space/hypre/
+* Petaca: https://github.com/nncarlson/petaca/
+* YAJL: https://lloyd.github.io/yajl/
+
+Truchas requires modified versions of the following libraries, which can
+be obtained from indicated repositories.
+
+* Chaco: https://gitlab.com/truchas/chaco/
+* Chaparral: https://gitlab.com/truchas/chaparral/
+* Scorpio: https://gitlab.com/truchas/scorpio/
+
 #### Supported compilers
 Although individually the TPLs can be built with any number of different
 compilers, it is strongly recommended that they be built with the same
@@ -16,9 +34,9 @@ same). Please see the BUILDING file in the Truchas distribution for a list
 of compilers supported by Truchas.
 
 ### Quick Start Guide
-The packages that can be built are HDF5, NetCDF, Exodus, HYPRE, Petaca, and
-YAJL. Compressed tarfiles of their source distributions can be found in the
-tarfiles subdirectory.
+The packages that can be built are HDF5, NetCDF, Exodus, HYPRE, Petaca,
+YAJL, Chaco, Chaparral, and Scorpio. Compressed tar files of their source
+distributions can be found in the `tarfiles` subdirectory.
 
 The basic procedure is simple (when it works). You create a build directory,
 run cmake from that directory, and then run make. What you choose for a build
