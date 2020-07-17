@@ -25,9 +25,11 @@ option(SEARCH_FOR_HDF5 "Search for suitable HDF5 library" ON)
 option(SEARCH_FOR_NETCDF "Search for suitable NetCDF library" ON)
 option(SEARCH_FOR_EXODUS "Search for suitable Exodus library" ON)
 option(SEARCH_FOR_HYPRE "Search for suitable HYPRE library" ON)
-option(SEARCH_FOR_HYPRE "Search for suitable HYPRE library" ON)
 option(SEARCH_FOR_YAJL "Search for suitable YAJL library" ON)
 option(SEARCH_FOR_PETACA "Search for suitable Petaca library" ON)
+option(SEARCH_FOR_CHACO "Search for suitable Chaco library" ON)
+option(SEARCH_FOR_CHAPARRAL "Search for suitable Chaparral library" ON)
+option(SEARCH_FOR_SCORPIO "Search for suitable Scorpio library" ON)
 
 # This really doesn't do anything now.  Originally, only .so were
 # searched for when shared, and only .a when not shared.  This does not
@@ -80,6 +82,10 @@ endmacro()
 # MPI (needed by HYPRE, HDF5)
 find_package(MPI REQUIRED)
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
+endif()
+
 # Gather the C and Fortran flags that would be used by cmake into a single
 # variable.  These will be passed to external project configure scripts.
 set(cflags "${CMAKE_C_FLAGS}")
@@ -119,6 +125,9 @@ include(exodus_project)
 include(hypre_project)
 include(yajl_project)
 include(petaca_project)
+include(chaco_project)
+include(chaparral_project)
+include(scorpio_project)
 
 # Print a summary of the configuration.
 message(STATUS "")
@@ -126,7 +135,7 @@ string(REPLACE ";" " " project_list "${projects_found}")
 if(projects_found)
   message(STATUS "Packages found: ${project_list}")
 else()
-  message(STATUS "No packages were found.")
+  message(STATUS "No packages were found; this is okay.")
 endif()
 string(REPLACE ";" " " project_list "${projects_to_build}")
 if(projects_to_build)
