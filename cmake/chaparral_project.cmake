@@ -1,11 +1,10 @@
 if(SEARCH_FOR_CHAPARRAL)
   message(STATUS "Searching for a suitable Chaparral library ...")
-  find_package(CHAPARRAL)
+  find_package(Chaparral)
 endif()
 
-if(CHAPARRAL_FOUND)
+if(Chaparral_FOUND)
   list(APPEND projects_found "Chaparral")
-  add_custom_target(chaparral)
 else()
   list(APPEND projects_to_build "Chaparral")
   externalproject_add(chaparral

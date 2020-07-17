@@ -1,9 +1,9 @@
 if(SEARCH_FOR_CHACO)
   message(STATUS "Searching for a suitable Chaco library ...")
-  find_package(CHACO)
+  find_package(Chaco)
 endif()
 
-if(CHACO_FOUND)
+if(Chaco_FOUND)
   list(APPEND projects_found "Chaco")
 else()
   list(APPEND projects_to_build "Chaco")
