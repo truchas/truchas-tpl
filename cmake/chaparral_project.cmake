@@ -9,8 +9,8 @@ else()
   list(APPEND projects_to_build "Chaparral")
   externalproject_add(chaparral
     PREFIX chaco
-    URL ${TARFILE_DIR}/chaparral-3.2-747434a.tar.gz
-    URL_MD5 4b35f337ec93f08e6c0b8ec6e9fe9c0e
+    URL ${TARFILE_DIR}/chaparral-3.2-c8a190b.tar.gz
+    URL_MD5 156c87d9be0023af6213f4f5616fabba
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
                -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
