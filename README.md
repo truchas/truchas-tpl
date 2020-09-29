@@ -18,9 +18,11 @@ of each as a convenience.
 * Hypre: https://github.com/hypre-space/hypre/
 * Petaca: https://github.com/nncarlson/petaca/
 * YAJL: https://lloyd.github.io/yajl/
+* Portage: https://github.com/laristra/portage/
 
 Truchas requires modified versions of the following libraries, which can
-be obtained from indicated repositories.
+be obtained from indicated repositories. This repository also contains tar
+files of the modified versions of each as a convenience.
 
 * Chaco: https://gitlab.com/truchas/chaco/
 * Chaparral: https://gitlab.com/truchas/chaparral/
@@ -102,3 +104,8 @@ ones), here are some points to keep in mind.  Also look at the files in the
 * Version 2.15.1 or newer is required. Note that numerical differences in
   different versions may produce enough variation in the output to cause
   some regression tests to report failures.
+
+#### Portage
+* We currently use version 2.2.3 (with a small patch to work around an
+  Intel 19.1 bug). The Portage API is unstable, so other versions are
+  unlikely to work.
