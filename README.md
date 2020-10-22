@@ -18,7 +18,6 @@ of each as a convenience.
 * Hypre: https://github.com/hypre-space/hypre/
 * Petaca: https://github.com/nncarlson/petaca/
 * YAJL: https://lloyd.github.io/yajl/
-* Portage: https://github.com/laristra/portage/
 
 Truchas requires modified versions of the following libraries, which can
 be obtained from indicated repositories. This repository also contains tar
@@ -27,6 +26,14 @@ files of the modified versions of each as a convenience.
 * Chaco: https://gitlab.com/truchas/chaco/
 * Chaparral: https://gitlab.com/truchas/chaparral/
 * Scorpio: https://gitlab.com/truchas/scorpio/
+
+A third-party library that Truchas may optionally use is Portage:
+
+* Portage: https://github.com/laristra/portage/
+
+To build (or find) this library include the CMake option `-D BUILD_PORTAGE=ON`.
+This library is extra picky about compilers and dependent libraries, and it may
+be difficult to get it to compile without error.
 
 #### Supported compilers
 Although individually the TPLs can be built with any number of different

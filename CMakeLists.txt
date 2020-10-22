@@ -30,6 +30,7 @@ option(SEARCH_FOR_PETACA "Search for suitable Petaca library" ON)
 option(SEARCH_FOR_CHACO "Search for suitable Chaco library" ON)
 option(SEARCH_FOR_CHAPARRAL "Search for suitable Chaparral library" ON)
 option(SEARCH_FOR_SCORPIO "Search for suitable Scorpio library" ON)
+option(BUILD_PORTAGE "Find/build the Portage library" OFF)
 option(SEARCH_FOR_PORTAGE "Search for suitable Portage library" OFF)
 
 # This really doesn't do anything now.  Originally, only .so were
@@ -129,7 +130,9 @@ include(petaca_project)
 include(chaco_project)
 include(chaparral_project)
 include(scorpio_project)
-include(portage_project)
+if(BUILD_PORTAGE)
+  include(portage_project)
+endif()
 
 # Print a summary of the configuration.
 message(STATUS "")
