@@ -32,6 +32,8 @@ option(SEARCH_FOR_CHAPARRAL "Search for suitable Chaparral library" ON)
 option(SEARCH_FOR_SCORPIO "Search for suitable Scorpio library" ON)
 option(BUILD_PORTAGE "Find/build the Portage library" OFF)
 option(SEARCH_FOR_PORTAGE "Search for suitable Portage library" OFF)
+option(BUILD_METIS "Find/build the Metis library" ON)
+option(SEARCH_FOR_METIS "Search for suitable Metis library" ON)
 
 # This really doesn't do anything now.  Originally, only .so were
 # searched for when shared, and only .a when not shared.  This does not
@@ -133,6 +135,7 @@ include(scorpio_project)
 if(BUILD_PORTAGE)
   include(portage_project)
 endif()
+include(metis_project)
 
 # Print a summary of the configuration.
 message(STATUS "")
