@@ -27,13 +27,17 @@ files of the modified versions of each as a convenience.
 * Chaparral: https://gitlab.com/truchas/chaparral/
 * Scorpio: https://gitlab.com/truchas/scorpio/
 
-A third-party library that Truchas may optionally use is Portage:
+Optional third-party libraries that Truchas may use:
 
+* Metis: http://glaros.dtc.umn.edu/gkhome/metis/metis/download
 * Portage: https://github.com/laristra/portage/
 
-To build (or find) this library include the CMake option `-D BUILD_PORTAGE=ON`.
-This library is extra picky about compilers and dependent libraries, and it may
-be difficult to get it to compile without error.
+The default is to build Metis if not found; include the CMake option
+`-D BUILD_METIS=OFF` to skip Metis.
+
+To build (or find) Portage include the CMake option `-D BUILD_PORTAGE=ON`.
+This library is extra picky about compilers and dependent libraries, and
+it may be difficult to get it to compile without error.
 
 #### Supported compilers
 Although individually the TPLs can be built with any number of different
