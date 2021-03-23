@@ -33,6 +33,7 @@ else()
 #                      cc=${CMAKE_C_COMPILER} shared=${metis_shlib_flag}
 #    BUILD_COMMAND $(MAKE)
 #    BUILD_IN_SOURCE 1
+    PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/metis-cmake-version.patch
     LOG_DOWNLOAD 1
     LOG_CONFIGURE 1
     LOG_BUILD 1
