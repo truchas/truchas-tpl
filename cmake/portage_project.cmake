@@ -3,7 +3,7 @@ if(SEARCH_FOR_PORTAGE)
   find_package(portage)
 endif()
 
-if(PORTAGE_FOUND)
+if(portage_FOUND)
   list(APPEND projects_found "portage")
   add_custom_target(portage)
 else()
