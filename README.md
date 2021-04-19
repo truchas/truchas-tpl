@@ -48,8 +48,8 @@ of compilers supported by Truchas.
 
 ### Quick Start Guide
 The packages that can be built are HDF5, NetCDF, Exodus, HYPRE, Petaca,
-YAJL, Chaco, Chaparral, and Scorpio. Compressed tar files of their source
-distributions can be found in the `tarfiles` subdirectory.
+YAJL, Chaco, Chaparral, Scorpio, METIS, and Portage. Compressed tar files
+of their source distributions can be found in the `tarfiles` subdirectory.
 
 The basic procedure is simple (when it works). You create a build directory,
 run cmake from that directory, and then run make. What you choose for a build
@@ -79,10 +79,10 @@ By default cmake will search for an existing installation of each package
 and only configure a package build if it cannot find a suitable version.
 You can disable this search and just build the package by setting
 `-D SEARCH_FOR_<pkg>=no` on the cmake command line.  Here `<pkg>` can be
-`HDF5`, `NETCDF`, `EXODUS`, `HYPRE`, `YAJL`, or `PETACA`. This is sometimes
-necessary when cmake finds a package that you don't want it to use. Also
-note that that when searching, cmake always looks first in the installation
-directory.
+`HDF5`, `NETCDF`, `EXODUS`, `HYPRE`, `YAJL`, `PETACA`, `METIS`, or `PORTAGE`.
+This is sometimes necessary when cmake finds a package that you don't want
+it to use. Also note that that when searching, cmake always looks first in
+the installation directory.
 
 Another command line variables is `ENABLE_SHARED`.  The default is `yes`.
 Setting `ENABLE_SHARED` to `no`, meaning find and build static libraries,
@@ -117,6 +117,5 @@ ones), here are some points to keep in mind.  Also look at the files in the
   some regression tests to report failures.
 
 #### Portage
-* We currently use version 2.2.3 (with a small patch to work around an
-  Intel 19.1 bug). The Portage API is unstable, so other versions are
-  unlikely to work.
+* We currently use version 3.0.0. The Portage API is unstable, so other
+  versions are unlikely to work.
