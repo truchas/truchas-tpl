@@ -12,6 +12,8 @@ if(SEARCH_FOR_HDF5)
     endif()
   endif()
   if(HDF5_FOUND)
+    list(GET HDF5_INCLUDE_DIRS 0 HDF5_ROOT)
+    get_filename_component(HDF5_ROOT ${HDF5_ROOT} DIRECTORY)
     add_library(hdf5 INTERFACE) # dummy target for dependencies
   endif()
 endif()
@@ -36,12 +38,14 @@ else()
 	       -D HDF5_BUILD_CPP_LIB:BOOL=OFF
                -D HDF5_EXTERNAL_LIB_PREFIX:STRING=${TRUCHAS_HDF5_PREFIX}
 	       -D BUILD_TESTING:BOOL=OFF
+               -D HDF5_ENABLE_Z_LIB_SUPPORT=ON
     LOG_DOWNLOAD 1
     LOG_CONFIGURE 1
     LOG_BUILD 1
     LOG_INSTALL 1
   )
   # These FindHDF5 variables are needed to configure dependent packages
+  set(HDF5_ROOT "${CMAKE_INSTALL_PREFIX}")
   set(HDF5_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include)
   set(HDF5_LIBRARY_DIRS ${CMAKE_INSTALL_PREFIX}/lib)
   if(BUILD_SHARED_LIBS)

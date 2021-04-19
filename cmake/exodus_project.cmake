@@ -24,17 +24,12 @@ else()
     URL ${TARFILE_DIR}/exodus-5.14.tar.gz
     URL_MD5 fb403a689368d9036a1074a9fc96b9f1
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
+               -D BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                -D CMAKE_C_COMPILER:PATH=${CMAKE_C_COMPILER}
                -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
                -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
-               #-D CMAKE_PREFIX_PATH:PATH=${CMAKE_INSTALL_PREFIX}
-               -D BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-               -D NETCDF_INCLUDE_DIR:PATH=${NETCDF_C_INCLUDE_DIR}
-               -D NETCDF_LIBRARY:PATH=${NETCDF_C_LIBRARY}
-               -D HDF5_LIBRARY=${hdf5_library}
-               -D HDF5HL_LIBRARY=${hdf5hl_library}
-               #-D CMAKE_EXE_LINKER_FLAGS=${hdf5_hl_ldflags}
-    PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/exodus-cmake-version.patch
+    PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/exodus-dependencies.patch
+    COMMAND patch -p1 < ${TARFILE_DIR}/exodus-cmake-version.patch
     LOG_DOWNLOAD 1
     LOG_CONFIGURE 1
     LOG_BUILD 1
