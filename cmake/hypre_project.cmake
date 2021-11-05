@@ -13,29 +13,20 @@ if(HYPRE_FOUND)
   list(APPEND projects_found "HYPRE")
 else()
   list(APPEND projects_to_build "HYPRE")
-  set(HYPRE_VERSION "2.20.0")
-  if(BUILD_SHARED_LIBS)
-    set(hypre_shlib_flag "--enable-shared")
-  else()
-    set(hypre_shlib_flag "--disable-shared")
-  endif()
+  set(HYPRE_VERSION "2.23.0")
   externalproject_add(hypre
     PREFIX hypre
     URL ${TARFILE_DIR}/hypre-${HYPRE_VERSION}.tar.gz
-    URL_MD5 aba74c2f30fdb0188c4328e53b1929f2
-    UPDATE_COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${PROJECT_BINARY_DIR}/hypre/src/hypre/src
-        ${PROJECT_BINARY_DIR}/hypre/src/hypre
-    CONFIGURE_COMMAND ./configure
-                      CC=${MPI_C_COMPILER}
-                      CFLAGS=${cflags}
-                      --with-MPI
-                      --without-fei
-                      --disable-fortran
-                      --prefix=${CMAKE_INSTALL_PREFIX}
-                      ${hypre_shlib_flag}
-    BUILD_COMMAND "$(MAKE)" all
-    BUILD_IN_SOURCE 1
+    URL_MD5 45d201dc71de199a416a85c5bfb8515b
+    CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
+               -D BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+               -D HYPRE_ENABLE_SHARED=${BUILD_SHARED_LIBS}
+               -D CMAKE_C_COMPILER:PATH=${CMAKE_C_COMPILER}
+               -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
+               -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
+               -D HYPRE_WITH_MPI:BOOL=ON
+               -D HYPRE_ENABLE_FEI:BOOL=OFF
+    SOURCE_SUBDIR src
     LOG_DOWNLOAD 1
     LOG_CONFIGURE 1
     LOG_BUILD 1

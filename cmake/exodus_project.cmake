@@ -28,6 +28,8 @@ else()
                -D CMAKE_C_COMPILER:PATH=${CMAKE_C_COMPILER}
                -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
                -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
+               -D HDF5_ROOT:PATH=${HDF5_ROOT}
+               -D NETCDF_ROOT:PATH=${NETCDF_ROOT}
     PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/exodus-dependencies.patch
     COMMAND patch -p1 < ${TARFILE_DIR}/exodus-cmake-version.patch
     LOG_DOWNLOAD 1
