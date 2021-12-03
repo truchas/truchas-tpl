@@ -89,6 +89,14 @@ Setting `ENABLE_SHARED` to `no`, meaning find and build static libraries,
 generally doesn't work currently except on platforms that provide a "full"
 set of static system libraries (Cray, for example).
 
+You may optionally use `ninja` instead of `make`; the main benefit is that
+Ninja builds in parallel by default, while `make -jX` will not build the
+TPL packages in parallel. To do so, you need to add a flag to the cmake
+command line, and call `ninja` instead of `make`.
+
+    $ cmake -G Ninja <other flags>
+    $ ninja
+
 ### Package Configuration Notes
 If you find you have to build some packages manually (or obtain pre-built
 ones), here are some points to keep in mind.  Also look at the files in the
