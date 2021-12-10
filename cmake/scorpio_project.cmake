@@ -10,8 +10,8 @@ else()
   externalproject_add(scorpio
     DEPENDS hdf5
     PREFIX scorpio
-    URL ${TARFILE_DIR}/scorpio-2.2-9eb9117.tar.gz
-    URL_MD5 480c3e18f511d0e4c57ef0e6f093f60e
+    URL ${TARFILE_DIR}/scorpio-2.2-b802f1a.tar.gz
+    URL_MD5 51818a2b5f53654df13354d6ad18f647
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
                -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
