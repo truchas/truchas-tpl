@@ -1,9 +1,0 @@
-diff -ru exodus-5.14.orig/CMakeLists.txt exodus-5.14/CMakeLists.txt
---- exodus-5.14.orig/CMakeLists.txt	2011-10-03 15:20:32.000000000 -0600
-+++ exodus-5.14/CMakeLists.txt	2020-04-07 14:00:19.000000000 -0600
-@@ -1,4 +1,4 @@
--cmake_minimum_required(VERSION 2.6)
-+cmake_minimum_required(VERSION 3.16)
- PROJECT(ExodusII)
- 
- SET(EXODUSII_VERSION_MAJOR "5")
