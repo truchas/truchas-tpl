@@ -1,13 +1,13 @@
 if(SEARCH_FOR_EXODUS)
   message(STATUS "Searching for a suitable Exodus library ...")
-  find_package(Exodus "514")
+  find_package(Exodus "8.11")
 endif()
 
 if(EXODUS_FOUND)
   list(APPEND projects_found "Exodus")
 else()
   list(APPEND projects_to_build "Exodus")
-  set(EXODUS_VERSION "514")
+  set(EXODUS_VERSION "8.11")
   # Go ahead and specify the library paths below so that the find_library calls
   # in the exodus CMakeLists.txt will be short-circuited.  I do not think the
   # libraries actually matter (for shared at least) because we are not building
@@ -21,17 +21,25 @@ else()
   ExternalProject_Add(exodus
     DEPENDS hdf5 netcdf
     PREFIX exodus
-    URL ${TARFILE_DIR}/exodus-5.14.tar.gz
-    URL_MD5 fb403a689368d9036a1074a9fc96b9f1
+    URL ${TARFILE_DIR}/seacas-2021-04-05.tar.gz
+    URL_MD5 0810487854a17fde97c0f63f53170125
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-               -D CMAKE_C_COMPILER:PATH=${CMAKE_C_COMPILER}
+               -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
                -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
+               -D CMAKE_SHARED_LINKER_FLAGS=${CMAKE_SHARED_LINKER_FLAGS}
                -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
+               -D CMAKE_INSTALL_RPATH:PATH=${CMAKE_INSTALL_PREFIX}/lib
+               -D SEACASProj_ENABLE_SEACASExodus:BOOL=ON
+               -D SEACASProj_ENABLE_TESTS:BOOL=OFF
+               -D TPL_ENABLE_Netcdf:BOOL=ON
+               -D HDF5_NO_SYSTEM_PATHS:BOOL=ON
                -D HDF5_ROOT:PATH=${HDF5_ROOT}
-               -D NETCDF_ROOT:PATH=${NETCDF_ROOT}
-    PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/exodus-dependencies.patch
-    COMMAND patch -p1 < ${TARFILE_DIR}/exodus-cmake-version.patch
+               -D SEACASProj_SKIP_FORTRANCINTERFACE_VERIFY_TEST:BOOL=ON
+               -D SEACASProj_ENABLE_CXX11:BOOL=OFF
+               -D SEACASProj_ENABLE_Zoltan:BOOL=OFF
+               -D NetCDF_ROOT:PATH=${NETCDF_ROOT}
+               -D TPL_ENABLE_MPI=ON
     LOG_DOWNLOAD 1
     LOG_CONFIGURE 1
     LOG_BUILD 1
