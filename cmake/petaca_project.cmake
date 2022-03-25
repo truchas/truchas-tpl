@@ -10,8 +10,8 @@ else()
   externalproject_add(petaca
     DEPENDS yajl
     PREFIX petaca
-    URL ${TARFILE_DIR}/petaca-b88a057.tar.gz
-    URL_MD5 cf36957961a7ea7d421b5dcb915bd9b3
+    URL ${TARFILE_DIR}/petaca-22.03.tar.gz
+    URL_MD5 259c441e6690ac61ab0a4a85995c25df
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D CMAKE_Fortran_COMPILER:PATH=${CMAKE_Fortran_COMPILER}
                -D CMAKE_Fortran_FLAGS:STRING=${CMAKE_Fortran_FLAGS}
@@ -21,6 +21,7 @@ else()
                -D YAJL_LIBRARY:PATH=${YAJL_LIBRARY}
                -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
                -D BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+               -D ENABLE_STD_MOD_PROC_NAME=${ENABLE_STD_MOD_PROC_NAME}
     LOG_DOWNLOAD 1
     LOG_CONFIGURE 1
     LOG_BUILD 1
