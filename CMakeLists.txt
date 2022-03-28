@@ -35,6 +35,9 @@ option(SEARCH_FOR_PORTAGE "Search for suitable Portage library" ON)
 option(BUILD_METIS "Find/build the Metis library" ON)
 option(SEARCH_FOR_METIS "Search for suitable Metis library" ON)
 
+# this will be passed to petaca to control naming conventions
+option(ENABLE_STD_MOD_PROC_NAME "Build with -assume std_mod_proc_name when using Intel" OFF)
+
 # This really doesn't do anything now.  Originally, only .so were
 # searched for when shared, and only .a when not shared.  This does not
 # work for static (not shared) because some low-level system libraries
