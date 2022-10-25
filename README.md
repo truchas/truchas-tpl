@@ -18,6 +18,7 @@ of each as a convenience.
 * Hypre: https://github.com/hypre-space/hypre/
 * Petaca: https://github.com/nncarlson/petaca/
 * YAJL: https://lloyd.github.io/yajl/
+* Metis: http://glaros.dtc.umn.edu/gkhome/metis/metis/download
 
 Truchas requires modified versions of the following libraries, which can
 be obtained from indicated repositories. This repository also contains tar
@@ -29,11 +30,7 @@ files of the modified versions of each as a convenience.
 
 Optional third-party libraries that Truchas may use:
 
-* Metis: http://glaros.dtc.umn.edu/gkhome/metis/metis/download
 * Portage: https://github.com/laristra/portage/
-
-The default is to build Metis if not found; include the CMake option
-`-D BUILD_METIS=OFF` to skip Metis.
 
 To build (or find) Portage include the CMake option `-D BUILD_PORTAGE=ON`.
 This library is extra picky about compilers and dependent libraries, and
