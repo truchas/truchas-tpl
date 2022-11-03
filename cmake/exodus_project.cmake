@@ -21,8 +21,8 @@ else()
   ExternalProject_Add(exodus
     DEPENDS hdf5 netcdf
     PREFIX exodus
-    URL ${TARFILE_DIR}/seacas-2021-04-05.tar.gz
-    URL_MD5 0810487854a17fde97c0f63f53170125
+    URL ${TARFILE_DIR}/seacas-2022-10-14.tar.gz
+    URL_MD5 d2682321171323024100415c2faa5d88
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
@@ -30,14 +30,14 @@ else()
                -D CMAKE_SHARED_LINKER_FLAGS=${CMAKE_SHARED_LINKER_FLAGS}
                -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
                -D CMAKE_INSTALL_RPATH:PATH=${CMAKE_INSTALL_PREFIX}/lib
-               -D SEACASProj_ENABLE_SEACASExodus:BOOL=ON
-               -D SEACASProj_ENABLE_TESTS:BOOL=OFF
+               -D Seacas_ENABLE_SEACASExodus:BOOL=ON
+               -D Seacas_ENABLE_TESTS:BOOL=OFF
                -D TPL_ENABLE_Netcdf:BOOL=ON
                -D HDF5_NO_SYSTEM_PATHS:BOOL=ON
                -D HDF5_ROOT:PATH=${HDF5_ROOT}
-               -D SEACASProj_SKIP_FORTRANCINTERFACE_VERIFY_TEST:BOOL=ON
-               -D SEACASProj_ENABLE_CXX11:BOOL=OFF
-               -D SEACASProj_ENABLE_Zoltan:BOOL=OFF
+               -D Seacas_SKIP_FORTRANCINTERFACE_VERIFY_TEST:BOOL=ON
+               -D Seacas_ENABLE_CXX11:BOOL=OFF
+               -D Seacas_ENABLE_Zoltan:BOOL=OFF
                -D NetCDF_ROOT:PATH=${NETCDF_ROOT}
                -D TPL_ENABLE_MPI=ON
     LOG_DOWNLOAD 1
