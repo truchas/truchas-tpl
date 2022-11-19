@@ -72,14 +72,13 @@ install` command is necessary; the packages are automatically installed by the
 will often break things, so it is better to decide where you want them before
 starting.
 
-By default cmake will search for an existing installation of each package
-and only configure a package build if it cannot find a suitable version.
-You can disable this search and just build the package by setting
-`-D SEARCH_FOR_<pkg>=no` on the cmake command line.  Here `<pkg>` can be
+By default cmake will configure the build of all packages. You can have cmake
+search for and use an existing installation of a package by setting
+`-D SEARCH_FOR_<pkg>=yes` on the cmake command line.  Here `<pkg>` can be
 `HDF5`, `NETCDF`, `EXODUS`, `HYPRE`, `YAJL`, `PETACA`, `METIS`, or `PORTAGE`.
-This is sometimes necessary when cmake finds a package that you don't want
-it to use. Also note that that when searching, cmake always looks first in
-the installation directory.
+If it cannot find a suitable version it will go ahead and configure the
+build of the package. Note that that when searching, cmake always looks first
+in the installation directory.
 
 Another command line variables is `ENABLE_SHARED`.  The default is `yes`.
 Setting `ENABLE_SHARED` to `no`, meaning find and build static libraries,
