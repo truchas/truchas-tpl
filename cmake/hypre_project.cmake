@@ -1,6 +1,6 @@
 if(SEARCH_FOR_HYPRE)
   message(STATUS "Searching for a suitable HYPRE library ...")
-  find_package(HYPRE 2.18.2)
+  find_package(HYPRE 2.29.0)
   if(HYPRE_FOUND)
     if(NOT HYPRE_IS_PARALLEL)
       set(HYPRE_FOUND False)
@@ -13,11 +13,11 @@ if(HYPRE_FOUND)
   list(APPEND projects_found "HYPRE")
 else()
   list(APPEND projects_to_build "HYPRE")
-  set(HYPRE_VERSION "2.23.0")
+  set(HYPRE_VERSION "2.31.0")
   externalproject_add(hypre
     PREFIX hypre
     URL ${TARFILE_DIR}/hypre-${HYPRE_VERSION}.tar.gz
-    URL_MD5 45d201dc71de199a416a85c5bfb8515b
+    URL_MD5 3e6a9cea4e87d5d87301c95200d28242
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                -D HYPRE_ENABLE_SHARED=${BUILD_SHARED_LIBS}
