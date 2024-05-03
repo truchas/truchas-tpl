@@ -4,7 +4,7 @@ if(SEARCH_FOR_HDF5)
     set(HDF5_USE_STATIC_LIBRARIES True)
   endif()
   set(HDF5_PREFER_PARALLEL True)
-  find_package(HDF5 "1.14.3" COMPONENTS C HL)
+  find_package(HDF5 "1.14.4.2" COMPONENTS C HL)
   if(HDF5_FOUND)
     if(NOT HDF5_IS_PARALLEL)
       set(HDF5_FOUND False)
@@ -22,12 +22,12 @@ if(HDF5_FOUND)
   list(APPEND projects_found "HDF5")
 else()
   list(APPEND projects_to_build "HDF5")
-  set(HDF5_VERSION "1.14.3")
+  set(HDF5_VERSION "1.14.4.2")
   set(TRUCHAS_HDF5_PREFIX "truchas-")
   ExternalProject_Add(hdf5
     PREFIX hdf5
     URL ${TARFILE_DIR}/hdf5-${HDF5_VERSION}.tar.gz
-    URL_MD5 075d923171c7785b2ee7d820b0ef8707
+    URL_MD5 f1eaf87cc338475deb4aa48fb17cb8f8
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
                -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
