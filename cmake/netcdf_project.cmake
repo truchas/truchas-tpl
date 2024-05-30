@@ -28,7 +28,7 @@ else()
                -D ENABLE_EXAMPLES:BOOL=OFF
                -D ENABLE_DAP:BOOL=OFF
                -D HDF5_ROOT:PATH=${HDF5_ROOT}
-    #PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/netcdf-large-model.patch
+    PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/netcdf-issue-2674.patch
     LOG_UPDATE 1
     LOG_DOWNLOAD 1
     LOG_CONFIGURE 1
