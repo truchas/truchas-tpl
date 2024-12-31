@@ -15,3 +15,6 @@ Scorpio       | LGPL v3      | https://bitbucket.org/sarats/scorpio
 Chaco         | LGPL v2.1    | http://www.cs.sandia.gov/web1400/1400_download.html
 Chaparral     | LGPL v2.1    | https://gitlab.com/truchas/chaparral/
 Metis         | Apache v2.0  | http://glaros.dtc.umn.edu/gkhome/metis/metis/overview
+ScaLAPACK     | BSD          | https://www.netlib.org/scalapack
+MUMPS         | CeCILL-C     | https://mumps-solver.org
+mumps         | MIT          | https://github.com/scivision/mumps

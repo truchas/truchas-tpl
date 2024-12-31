@@ -32,6 +32,9 @@ option(SEARCH_FOR_SCORPIO "Search for suitable Scorpio library" OFF)
 option(BUILD_PORTAGE "Find/build the Portage library" OFF)
 option(SEARCH_FOR_PORTAGE "Search for suitable Portage library" OFF)
 option(SEARCH_FOR_METIS "Search for suitable Metis library" OFF)
+option(BUILD_MUMPS "Find/build the Portage library" ON)
+option(SEARCH_FOR_SCALAPACK "Search for suitable ScalaPACK library" OFF)
+option(SEARCH_FOR_MUMPS "Search for suitable MUMPS library" OFF)
 
 # this will be passed to petaca to control naming conventions
 option(ENABLE_STD_MOD_PROC_NAME "Build with -assume std_mod_proc_name when using Intel" OFF)
@@ -136,6 +139,10 @@ include(metis_project)
 if(BUILD_PORTAGE)
   include(wonton_project)
   include(portage_project)
+endif()
+if(BUILD_MUMPS)
+  include(scalapack_project)
+  include(mumps_project)
 endif()
 
 # Print a summary of the configuration.

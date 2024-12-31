@@ -6,4 +6,4 @@ set(CMAKE_C_COMPILER gcc CACHE STRING "C Compiler")
 set(CMAKE_CXX_COMPILER g++ CACHE STRING "C++ Compiler")
 set(CMAKE_Fortran_COMPILER nagfor CACHE STRING "Fortran Compiler")
 
-set(CMAKE_Fortran_FLAGS "-u -O3" CACHE STRING "Fortran compile flags")
+set(CMAKE_Fortran_FLAGS "-O3" CACHE STRING "Fortran compile flags")
