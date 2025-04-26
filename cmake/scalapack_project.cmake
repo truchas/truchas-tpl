@@ -9,13 +9,19 @@ if(SCALAPACK_FOUND)
 else()
   list(APPEND projects_to_build "scalapack")
   set(SCALAPACK_VERSION "2.2.1")
+  if(CMAKE_C_COMPILER_ID MATCHES "GNU")
+    set(scalapack_c_flags "${CMAKE_C_FLAGS} -std=gnu90")
+  else()
+    set(scalapack_c_flags "${CMAKE_C_FLAGS}")
+  endif()
+
   externalproject_add(scalapack
     PREFIX scalapack
     URL ${TARFILE_DIR}/scalapack-${SCALAPACK_VERSION}.tar.gz
     URL_MD5 58f32e40b0082012f1564c7f712a0ba1
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D CMAKE_C_COMPILER:PATH=${CMAKE_C_COMPILER}
-               -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
+               -D CMAKE_C_FLAGS:STRING=${scalapack_c_flags}
 	       -D CMAKE_Fortran_COMPILER:PATH=${CMAKE_Fortran_COMPILER}
 	       -D CMAKE_Fortran_FLAGS:STRING=${CMAKE_Fortran_FLAGS}
                -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
