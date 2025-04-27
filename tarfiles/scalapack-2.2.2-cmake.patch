@@ -1,0 +1,22 @@
+diff -ru scalapack-2.2.2.orig/CMakeLists.txt scalapack-2.2.2/CMakeLists.txt
+--- scalapack-2.2.2.orig/CMakeLists.txt	2024-08-06 05:44:11.000000000 -0600
++++ scalapack-2.2.2/CMakeLists.txt	2025-04-27 13:48:35.047395466 -0600
+@@ -18,6 +18,9 @@
+    endif ()
+ endif ()
+ 
++add_compile_options("$<$<COMPILE_LANG_AND_ID:Fortran,NAG>:-dcfuns;-mismatch_all>")
++add_compile_options("$<$<COMPILE_LANG_AND_ID:C,GNU>:-std=gnu90>")
++
+ #
+ #   MPI
+ #
+@@ -243,7 +246,7 @@
+    set_target_properties(scalapack PROPERTIES
+     VERSION ${SCALAPACK_VERSION}
+     SOVERSION ${SCALAPACK_VERSION_MAJOR}.${SCALAPACK_VERSION_MINOR})
+-   target_link_libraries( scalapack ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} MPI::MPI_C)
++   target_link_libraries( scalapack ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} MPI::MPI_Fortran)
+    scalapack_install_library(scalapack)
+ else () # Need to separate Fortran and C Code
+    OPTION(BUILD_SHARED_LIBS "Build shared libraries" ON )
