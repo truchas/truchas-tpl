@@ -6,7 +6,7 @@ diff -ru scalapack-2.2.2.orig/CMakeLists.txt scalapack-2.2.2/CMakeLists.txt
  endif ()
  
 +add_compile_options("$<$<COMPILE_LANG_AND_ID:Fortran,NAG>:-dcfuns;-mismatch_all>")
-+add_compile_options("$<$<COMPILE_LANG_AND_ID:C,GNU>:-std=gnu90>")
++add_compile_options("$<$<COMPILE_LANG_AND_ID:C,GNU,Clang>:-std=gnu90>")
 +
  #
  #   MPI
