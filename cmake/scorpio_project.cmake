@@ -7,6 +7,11 @@ if(Scorpio_FOUND)
   list(APPEND projects_found "Scorpio")
 else()
   list(APPEND projects_to_build "Scorpio")
+  if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    set(scorpio_c_flags "${CMAKE_C_FLAGS} -std=gnu90")
+  else(})
+    set(scorpio_c_flags "${CMAKE_C_FLAGS}")
+  endif()
   externalproject_add(scorpio
     DEPENDS hdf5
     PREFIX scorpio
@@ -14,7 +19,7 @@ else()
     URL_MD5 ca99767fac4ed853f5cf3d5afb0fdc86
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
-               -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
+               -D CMAKE_C_FLAGS:STRING=${scorpio_c_flags}
                -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
                -D BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                -D HDF5_ROOT:PATH=${HDF5_ROOT}

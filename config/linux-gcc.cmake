@@ -7,4 +7,4 @@ set(CMAKE_CXX_COMPILER g++ CACHE STRING "C++ Compiler")
 set(CMAKE_Fortran_COMPILER gfortran CACHE STRING "Fortran Compiler")
 
 # Additional flags to the default CMAKE_<lang>_FLAGS_<build_type> flags
-set(CMAKE_Fortran_FLAGS "-fimplicit-none" CACHE STRING "Fortran compile flags")
+#set(CMAKE_Fortran_FLAGS "-fimplicit-none" CACHE STRING "Fortran compile flags")
