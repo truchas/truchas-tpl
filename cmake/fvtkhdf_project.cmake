@@ -7,6 +7,10 @@ if(fVTKHDF_FOUND)
   list(APPEND projects_found "fVTKHDF")
 else()
   list(APPEND projects_to_build "fVTKHDF")
+  if(CMAKE_Fortran_COMPILER_ID MATCHES "NAG")
+    set(CMAKE_Fortran_COMPILER mpifort)
+    set(CMAKE_C_COMPILER mpicc)
+  endif()
   externalproject_add(fvtkhdf
     DEPENDS hdf5
     PREFIX fvtkhdf
