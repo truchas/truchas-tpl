@@ -24,6 +24,10 @@ else()
   list(APPEND projects_to_build "HDF5")
   set(HDF5_VERSION "1.14.4.2")
   set(TRUCHAS_HDF5_PREFIX "truchas-")
+  if(CMAKE_Fortran_COMPILER_ID MATCHES "NAG")
+    set(CMAKE_Fortran_COMPILER mpifort)
+    set(CMAKE_C_COMPILER mpicc)
+  endif()
   ExternalProject_Add(hdf5
     PREFIX hdf5
     URL ${TARFILE_DIR}/hdf5-${HDF5_VERSION}.tar.gz
