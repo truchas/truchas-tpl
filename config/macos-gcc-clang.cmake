@@ -7,8 +7,9 @@ set(CMAKE_CXX_COMPILER $ENV{CPP} CACHE STRING "C++ Compiler")
 set(CMAKE_Fortran_COMPILER $ENV{FC} CACHE STRING "Fortran Compiler")
 
 # Additional flags to the default CMAKE_<lang>_FLAGS_<build_type> flags
-set(CMAKE_Fortran_FLAGS "-fimplicit-none" CACHE STRING "Fortran compile flags")
+#set(CMAKE_Fortran_FLAGS "-fimplicit-none" CACHE STRING "Fortran compile flags")
+set(CMAKE_C_FLAGS "-Wno-implicit-function-declaration -Wno-implicit-int" CACHE STRING "C compile flags")
 
-set(CMAKE_SHARED_LINKER_FLAGS
-  "-Wl,-undefined -Wl,dynamic_lookup -Wl,-headerpad_max_install_names"
-  CACHE STRING "Mac linker flags")
+# set(CMAKE_SHARED_LINKER_FLAGS
+#   "-Wl,-undefined -Wl,dynamic_lookup -Wl,-headerpad_max_install_names"
+#   CACHE STRING "Mac linker flags")
