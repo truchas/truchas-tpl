@@ -36,6 +36,8 @@ option(SEARCH_FOR_METIS "Search for suitable Metis library" OFF)
 option(BUILD_MUMPS "Find/build the Portage library" ON)
 option(SEARCH_FOR_SCALAPACK "Search for suitable ScalaPACK library" OFF)
 option(SEARCH_FOR_MUMPS "Search for suitable MUMPS library" OFF)
+set(MUMPS_LAPACK_VENDOR "" CACHE STRING
+    "LAPACK vendor passed to the MUMPS CMake build")
 
 # this will be passed to petaca to control naming conventions
 option(ENABLE_STD_MOD_PROC_NAME "Build with -assume std_mod_proc_name when using Intel" OFF)

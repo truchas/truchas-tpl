@@ -9,9 +9,17 @@ if(MUMPS_FOUND)
 else()
   list(APPEND projects_to_build "mumps")
   set(MUMPS_VERSION "5.7.3.1-21-fdd8339")
+  set(mumps_lapack_vendor_arg)
+  if(MUMPS_LAPACK_VENDOR)
+    string(REPLACE ";" "|" mumps_lapack_vendor
+           "${MUMPS_LAPACK_VENDOR}")
+    set(mumps_lapack_vendor_arg
+        -D LAPACK_VENDOR:STRING=${mumps_lapack_vendor})
+  endif()
   externalproject_add(mumps
     DEPENDS scalapack
     PREFIX mumps
+    LIST_SEPARATOR "|"
     URL ${TARFILE_DIR}/mumps-${MUMPS_VERSION}.tar.gz
     URL_MD5 0fb7cd539329f818899cfea2219c7cf5
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
@@ -29,6 +37,7 @@ else()
 	       -D scalapack:BOOL=ON
 	       -D MUMPS_BUILD_TESTING=OFF
 	       -D url:PATH=${TARFILE_DIR}/MUMPS_5.7.3.tar.gz
+               ${mumps_lapack_vendor_arg}
     LOG_DOWNLOAD 1
     LOG_CONFIGURE 1
     LOG_BUILD 1

@@ -123,3 +123,11 @@ ones), here are some points to keep in mind.  Also look at the files in the
 #### Portage
 * We currently use version 3.0.0. The Portage API is unstable, so other
   versions are unlikely to work.
+
+#### MUMPS
+* Leave `MUMPS_LAPACK_VENDOR` unset to use MUMPS's default LAPACK search.
+  Supported vendors are `Netlib`, `OpenBLAS`, `MKL`, `MKL64`, `AOCL`, and
+  `Atlas`.
+* Modifiers may be combined with a vendor as a semicolon-separated CMake list,
+  for example `-DMUMPS_LAPACK_VENDOR='MKL;OpenMP'`. Supported modifiers are
+  `STATIC`, `LAPACKE`, `LAPACK95`, `OpenMP`, and `TBB`.
