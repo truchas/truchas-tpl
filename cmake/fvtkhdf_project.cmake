@@ -14,8 +14,8 @@ else()
   externalproject_add(fvtkhdf
     DEPENDS hdf5
     PREFIX fvtkhdf
-    URL ${TARFILE_DIR}/fvtkhdf-0.6.0.tar.gz
-    URL_MD5 3f6ddf7e16edcc9efde228524971a294
+    URL ${TARFILE_DIR}/fvtkhdf-0.6.1.tar.gz
+    URL_MD5 35aba838644deeceb9404a96e53b055c
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
                -D CMAKE_PREFIX_PATH:PATH=${CMAKE_PREFIX_PATH}
                -D CMAKE_Fortran_COMPILER:PATH=${CMAKE_Fortran_COMPILER}
