@@ -6,7 +6,7 @@ diff -ru scalapack-2.2.2.orig/CMakeLists.txt scalapack-2.2.2/CMakeLists.txt
  endif ()
  
 +add_compile_options("$<$<COMPILE_LANG_AND_ID:Fortran,NAG>:-dcfuns;-mismatch_all>")
-+add_compile_options("$<$<COMPILE_LANG_AND_ID:C,GNU,Clang>:-std=gnu90>")
++add_compile_options("$<$<COMPILE_LANG_AND_ID:C,GNU,Clang,AppleClang>:-std=gnu90;-Wno-implicit-function-declaration;-Wno-implicit-int>")
 +
  #
  #   MPI
@@ -20,3 +20,12 @@ diff -ru scalapack-2.2.2.orig/CMakeLists.txt scalapack-2.2.2/CMakeLists.txt
     scalapack_install_library(scalapack)
  else () # Need to separate Fortran and C Code
     OPTION(BUILD_SHARED_LIBS "Build shared libraries" ON )
+diff -ru scalapack-2.2.2.orig/BLACS/INSTALL/CMakeLists.txt scalapack-2.2.2/BLACS/INSTALL/CMakeLists.txt
+--- scalapack-2.2.2.orig/BLACS/INSTALL/CMakeLists.txt	2024-08-06 05:44:11.000000000 -0600
++++ scalapack-2.2.2/BLACS/INSTALL/CMakeLists.txt	2026-06-11 12:00:00.000000000 -0600
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8)
++cmake_minimum_required(VERSION 3.5)
+ project(INSTALL C Fortran)
+ 
+ add_executable(xintface Fintface.f Cintface.c)

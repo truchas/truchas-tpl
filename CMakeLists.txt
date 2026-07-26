@@ -1,17 +1,25 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.20)
 
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake"
-                      "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
-include(NoInSourceBuild)
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+  message(FATAL_ERROR
+    "In-source builds are not supported. Run CMake from the repository root "
+    "with a preset, for example:\n"
+    "  cmake --preset linux-gcc\n"
+    "or use an explicit build directory:\n"
+    "  cmake -S . -B build/linux-gcc")
+endif()
+
 include(ExternalProject)
+include(TruchasTPLExternalProject)
+include(TruchasTPLPrefixMetadata)
 
 project(TruchasTPL C CXX Fortran)
 
 # Fix a few things that cmake gets wrong for the NAG compiler.
 if(CMAKE_Fortran_COMPILER_ID MATCHES "NAG")
   set(CMAKE_Fortran_COMPILE_OPTIONS_PIE "-PIC")
-  include(NAGFortranCompilerVersion)
 endif()
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -20,47 +28,34 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   list(APPEND CMAKE_SYSTEM_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
 endif()
 
-option(BUILD_SHARED_LIBS "Find/build shared TPLs" ON)
-option(SEARCH_FOR_HDF5 "Search for suitable HDF5 library" OFF)
-option(SEARCH_FOR_FVTKHDF "Search for suitable fVTKHDF library" OFF)
-option(SEARCH_FOR_NETCDF "Search for suitable NetCDF library" OFF)
-option(SEARCH_FOR_EXODUS "Search for suitable Exodus library" OFF)
-option(SEARCH_FOR_HYPRE "Search for suitable HYPRE library" OFF)
-option(SEARCH_FOR_YAJL "Search for suitable YAJL library" OFF)
-option(SEARCH_FOR_PETACA "Search for suitable Petaca library" OFF)
-option(SEARCH_FOR_CHAPARRAL "Search for suitable Chaparral library" OFF)
-option(SEARCH_FOR_SCORPIO "Search for suitable Scorpio library" OFF)
-option(BUILD_PORTAGE "Find/build the Portage library" OFF)
-option(SEARCH_FOR_PORTAGE "Search for suitable Portage library" OFF)
-option(SEARCH_FOR_METIS "Search for suitable Metis library" OFF)
-option(BUILD_MUMPS "Find/build the Portage library" ON)
-option(SEARCH_FOR_SCALAPACK "Search for suitable ScalaPACK library" OFF)
-option(SEARCH_FOR_MUMPS "Search for suitable MUMPS library" OFF)
+set(TRUCHAS_TPL_EXTERNAL_CONFIGURE_STAMP
+    "${PROJECT_BINARY_DIR}/CMakeFiles/truchas_tpl_external_configure_inputs.stamp")
+add_custom_command(
+  OUTPUT "${TRUCHAS_TPL_EXTERNAL_CONFIGURE_STAMP}"
+  COMMAND "${CMAKE_COMMAND}" -E touch "${TRUCHAS_TPL_EXTERNAL_CONFIGURE_STAMP}"
+  DEPENDS "${PROJECT_BINARY_DIR}/CMakeCache.txt"
+  VERBATIM
+)
+add_custom_target(truchas_tpl_external_configure_inputs
+  DEPENDS "${TRUCHAS_TPL_EXTERNAL_CONFIGURE_STAMP}")
+
+option(BUILD_SHARED_LIBS "Build shared TPL libraries where supported" ON)
+option(BUILD_PORTAGE "Build optional Portage and Wonton libraries" OFF)
+option(BUILD_MUMPS "Build optional MUMPS and ScaLAPACK libraries" ON)
+
+option(TRUCHAS_TPL_BUILD_SHARED "Build shared TPL libraries where supported" ${BUILD_SHARED_LIBS})
+option(TRUCHAS_TPL_BUILD_PORTAGE "Build optional Portage and Wonton libraries" ${BUILD_PORTAGE})
+option(TRUCHAS_TPL_BUILD_MUMPS "Build optional MUMPS and ScaLAPACK libraries" ${BUILD_MUMPS})
+
+# Keep the original option names as internal compatibility variables for now.
+set(BUILD_SHARED_LIBS "${TRUCHAS_TPL_BUILD_SHARED}" CACHE BOOL "Build shared TPL libraries where supported" FORCE)
+set(BUILD_PORTAGE "${TRUCHAS_TPL_BUILD_PORTAGE}" CACHE BOOL "Build optional Portage and Wonton libraries" FORCE)
+set(BUILD_MUMPS "${TRUCHAS_TPL_BUILD_MUMPS}" CACHE BOOL "Build optional MUMPS and ScaLAPACK libraries" FORCE)
 set(MUMPS_LAPACK_VENDOR "" CACHE STRING
     "LAPACK vendor passed to the MUMPS CMake build")
 
 # this will be passed to petaca to control naming conventions
 option(ENABLE_STD_MOD_PROC_NAME "Build with -assume std_mod_proc_name when using Intel" OFF)
-
-# This really doesn't do anything now.  Originally, only .so were
-# searched for when shared, and only .a when not shared.  This does not
-# work for static (not shared) because some low-level system libraries
-# like libm are only available as .so.  This would trip up the FindHDF
-# module badly.  It boils down to what we mean by "shared" and "static"
-# and how to enforce it.  Shared probably means, make shared libraries
-# but use existing static ones if found, and static either the converse,
-# or something more restrictive like build static libraries but use
-# existing shared libraries if they are not one of the ones we can build?
-if(BUILD_SHARED_LIBS)
-  #message(STATUS "Finding and building shared libraries only.")
-  set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_SHARED_LIBRARY_SUFFIX}
-                                  ${CMAKE_STATIC_LIBRARY_SUFFIX})
-else()
-  #message(STATUS "Finding and building static libraries only.")
-  set(CMAKE_EXE_LINKER_FLAGS "-static")
-  set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX}
-                                  ${CMAKE_SHARED_LIBRARY_SUFFIX})
-endif()
 
 # This macro converts a cmake-style list of library paths (full) to a string
 # of -L and and corresponding -l arguments suitable for a link line.
@@ -92,6 +87,17 @@ endmacro()
 
 # MPI (needed by HYPRE, HDF5)
 find_package(MPI REQUIRED)
+include(TruchasTPLCompilers)
+
+# Prefer the selected TPL library type only after MPI has been found. Applying
+# this before FindMPI can force static MPI probes and break compiler detection.
+if(BUILD_SHARED_LIBS)
+  set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_SHARED_LIBRARY_SUFFIX}
+                                  ${CMAKE_STATIC_LIBRARY_SUFFIX})
+else()
+  set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX}
+                                  ${CMAKE_SHARED_LIBRARY_SUFFIX})
+endif()
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
@@ -121,13 +127,8 @@ endif()
 
 #### Configure the TPLs as external projects as needed #########################
 
-# Add the installation prefix to the list of paths that the various
-# find_* commands will use when searching.
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
-
 set(TARFILE_DIR ${PROJECT_SOURCE_DIR}/tarfiles)
 
-set(projects_found)
 set(projects_to_build)
 
 include(hdf5_project)
@@ -151,18 +152,14 @@ endif()
 
 # Print a summary of the configuration.
 message(STATUS "")
-string(REPLACE ";" " " project_list "${projects_found}")
-if(projects_found)
-  message(STATUS "Packages found: ${project_list}")
-else()
-  message(STATUS "No packages were found; this is okay.")
-endif()
+
+truchas_tpl_generate_prefix_metadata()
 string(REPLACE ";" " " project_list "${projects_to_build}")
 if(projects_to_build)
   message(STATUS "Packages to build: ${project_list}")
   message(STATUS "")
   message(STATUS "Packages will be installed in ${CMAKE_INSTALL_PREFIX}")
 else()
-  message(STATUS "No packages to build; all were found.")
+  message(STATUS "No packages selected to build.")
 endif()
 message(STATUS "")

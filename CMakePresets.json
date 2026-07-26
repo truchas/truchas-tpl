@@ -1,0 +1,123 @@
+{
+  "version": 2,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "linux-gcc",
+      "displayName": "Linux GCC",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_Fortran_COMPILER": "gfortran"
+      }
+    },
+    {
+      "name": "linux-nag",
+      "displayName": "Linux NAG",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "mpicc",
+        "CMAKE_CXX_COMPILER": "mpicxx",
+        "CMAKE_Fortran_COMPILER": "mpifort",
+        "CMAKE_Fortran_FLAGS": "-O3"
+      }
+    },
+    {
+      "name": "linux-intel",
+      "displayName": "Linux Intel",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "$env{CC}",
+        "CMAKE_CXX_COMPILER": "$env{CXX}",
+        "CMAKE_Fortran_COMPILER": "$env{FC}",
+        "CMAKE_C_FLAGS": "-Wno-implicit-function-declaration -Wno-implicit-int -fp-model=precise"
+      }
+    },
+    {
+      "name": "linux-llvm",
+      "displayName": "Linux LLVM",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "$env{CC}",
+        "CMAKE_CXX_COMPILER": "$env{CXX}",
+        "CMAKE_Fortran_COMPILER": "$env{FC}",
+        "CMAKE_C_FLAGS": "-ffp-model=precise"
+      }
+    },
+    {
+      "name": "macos-gcc",
+      "displayName": "macOS GCC",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "$env{CC}",
+        "CMAKE_CXX_COMPILER": "$env{CXX}",
+        "CMAKE_Fortran_COMPILER": "$env{FC}"
+      }
+    },
+    {
+      "name": "macos-gcc-clang",
+      "displayName": "macOS GCC/Clang",
+      "inherits": "macos-gcc",
+      "cacheVariables": {
+        "CMAKE_C_FLAGS": "-Wno-implicit-function-declaration -Wno-implicit-int"
+      }
+    },
+    {
+      "name": "macos-nag",
+      "displayName": "macOS NAG",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_Fortran_COMPILER": "nagfor",
+        "CMAKE_C_FLAGS": "-Wno-error=implicit-function-declaration",
+        "CMAKE_Fortran_FLAGS": "-u -O3",
+        "CMAKE_SHARED_LINKER_FLAGS": "-Wl,-undefined -Wl,dynamic_lookup -Wl,-headerpad_max_install_names"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "linux-gcc",
+      "configurePreset": "linux-gcc"
+    },
+    {
+      "name": "linux-nag",
+      "configurePreset": "linux-nag"
+    },
+    {
+      "name": "linux-intel",
+      "configurePreset": "linux-intel"
+    },
+    {
+      "name": "linux-llvm",
+      "configurePreset": "linux-llvm"
+    },
+    {
+      "name": "macos-gcc",
+      "configurePreset": "macos-gcc"
+    },
+    {
+      "name": "macos-gcc-clang",
+      "configurePreset": "macos-gcc-clang"
+    },
+    {
+      "name": "macos-nag",
+      "configurePreset": "macos-nag"
+    }
+  ]
+}

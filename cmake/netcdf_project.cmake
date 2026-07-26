@@ -1,40 +1,22 @@
-if(SEARCH_FOR_NETCDF)
-  message(STATUS "Searching for a suitable NetCDF library ...")
-  find_package(NetCDF "4.8")
-  if(NETCDF_FOUND)
-    if(NOT NETCDF_HAS_NC4)
-      message(STATUS "Found unsuitable NetCDF without required netcdf-4 feature")
-      set(NETCDF_FOUND False)
-    endif()
-  endif()
-endif()
+list(APPEND projects_to_build "NetCDF")
+set(NETCDF_VERSION "4.9.2")
 
-if(NETCDF_FOUND)
-  list(APPEND projects_found "NetCDF")
-else()
-  list(APPEND projects_to_build "NetCDF")
-  set(NETCDF_VERSION "4.9.2")
+truchas_tpl_external_project(
+  NAME netcdf
+  DISPLAY_NAME NetCDF
+  VERSION ${NETCDF_VERSION}
+  DEPENDS hdf5
+  URL ${TARFILE_DIR}/netcdf-c-${NETCDF_VERSION}.tar.gz
+  URL_HASH SHA256=cf11babbbdb9963f09f55079e0b019f6d0371f52f8e1264a5ba8e9fdab1a6c48
+  PATCH_COMMAND
+    "${CMAKE_COMMAND}" -E chdir <SOURCE_DIR>
+    patch -p1 --input "${TARFILE_DIR}/netcdf-issue-2674.patch"
+  CMAKE_ARGS
+    -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
+    -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
+    -D ENABLE_EXAMPLES:BOOL=OFF
+    -D ENABLE_DAP:BOOL=OFF
+    -D HDF5_ROOT:PATH=${HDF5_ROOT}
+)
 
-  externalproject_add(netcdf
-    DEPENDS hdf5
-    PREFIX netcdf
-    URL ${TARFILE_DIR}/netcdf-c-${NETCDF_VERSION}.tar.gz
-    URL_MD5 f48ee01534365006934f0c63d4055ea0
-    CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
-               -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
-               -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
-               -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
-               -D BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-               -D ENABLE_EXAMPLES:BOOL=OFF
-               -D ENABLE_DAP:BOOL=OFF
-               -D HDF5_ROOT:PATH=${HDF5_ROOT}
-    PATCH_COMMAND patch -p1 < ${TARFILE_DIR}/netcdf-issue-2674.patch
-    LOG_UPDATE 1
-    LOG_DOWNLOAD 1
-    LOG_CONFIGURE 1
-    LOG_BUILD 1
-    LOG_INSTALL 1
-    )
-
-  set(netCDF_ROOT ${CMAKE_INSTALL_PREFIX})
-endif()
+set(netCDF_ROOT ${CMAKE_INSTALL_PREFIX})

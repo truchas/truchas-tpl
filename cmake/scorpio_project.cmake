@@ -1,41 +1,31 @@
-if(SEARCH_FOR_SCORPIO)
-  message(STATUS "Searching for a suitable Scorpio library ...")
-  find_package(Scorpio)
+list(APPEND projects_to_build "Scorpio")
+
+if(CMAKE_C_COMPILER_ID MATCHES "GNU")
+  set(scorpio_c_flags "${CMAKE_C_FLAGS} -std=gnu90")
+elseif(CMAKE_C_COMPILER_ID MATCHES "Clang")
+  set(scorpio_c_flags "${CMAKE_C_FLAGS} -std=gnu90 -Wno-error=incompatible-pointer-types")
+elseif(CMAKE_C_COMPILER_ID MATCHES "IntelLLVM")
+  set(scorpio_c_flags "${CMAKE_C_FLAGS} -Wno-error=incompatible-pointer-types")
+else()
+  set(scorpio_c_flags "${CMAKE_C_FLAGS}")
 endif()
 
-if(Scorpio_FOUND)
-  list(APPEND projects_found "Scorpio")
+truchas_tpl_external_project(
+  NAME scorpio
+  DISPLAY_NAME Scorpio
+  VERSION 2.2
+  DEPENDS hdf5
+  URL ${TARFILE_DIR}/scorpio-2.2-c9029aa.tar.gz
+  URL_HASH SHA256=ea0fd7b30e18d0166ad5a5fafd0918d50796d6fba0c6d6af1b24185b8a7e1dca
+  CMAKE_ARGS
+    -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
+    -D CMAKE_C_FLAGS:STRING=${scorpio_c_flags}
+    -D HDF5_ROOT:PATH=${HDF5_ROOT}
+)
+
+if(BUILD_SHARED_LIBS)
+  set(SCORPIO_LIBRARY "${CMAKE_INSTALL_PREFIX}/lib/libscorpio${CMAKE_SHARED_LIBRARY_SUFFIX}")
 else()
-  list(APPEND projects_to_build "Scorpio")
-  if(CMAKE_C_COMPILER_ID MATCHES "GNU")
-    set(scorpio_c_flags "${CMAKE_C_FLAGS} -std=gnu90")
-  elseif(CMAKE_C_COMPILER_ID MATCHES "Clang")
-    set(scorpio_c_flags "${CMAKE_C_FLAGS} -std=gnu90 -Wno-error=incompatible-pointer-types")
-  elseif(CMAKE_C_COMPILER_ID MATCHES "IntelLLVM")
-    set(scorpio_c_flags "${CMAKE_C_FLAGS} -Wno-error=incompatible-pointer-types")
-  else(})
-    set(scorpio_c_flags "${CMAKE_C_FLAGS}")
-  endif()
-  externalproject_add(scorpio
-    DEPENDS hdf5
-    PREFIX scorpio
-    URL ${TARFILE_DIR}/scorpio-2.2-c9029aa.tar.gz
-    URL_MD5 ca99767fac4ed853f5cf3d5afb0fdc86
-    CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
-               -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
-               -D CMAKE_C_FLAGS:STRING=${scorpio_c_flags}
-               -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
-               -D BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-               -D HDF5_ROOT:PATH=${HDF5_ROOT}
-    LOG_DOWNLOAD 1
-    LOG_CONFIGURE 1
-    LOG_BUILD 1
-    LOG_INSTALL 1
-  )
-  if(BUILD_SHARED_LIBS)
-    set(SCORPIO_LIBRARY "${CMAKE_INSTALL_PREFIX}/lib/libscorpio${CMAKE_SHARED_LIBRARY_SUFFIX}")
-  else()
-    set(SCORPIO_LIBRARY "${CMAKE_INSTALL_PREFIX}/lib/libscorpio${CMAKE_STATIC_LIBRARY_SUFFIX}")
-  endif()
-  set(SCORPIO_LIBRARIES "${SCORPIO_LIBRARY}")
+  set(SCORPIO_LIBRARY "${CMAKE_INSTALL_PREFIX}/lib/libscorpio${CMAKE_STATIC_LIBRARY_SUFFIX}")
 endif()
+set(SCORPIO_LIBRARIES "${SCORPIO_LIBRARY}")

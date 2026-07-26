@@ -1,31 +1,19 @@
-if(SEARCH_FOR_SCALAPACK)
-  message(STATUS "Searching for a suitable ScalaPACK library ...")
-  find_package(SCALAPACK)
-endif()
+list(APPEND projects_to_build "scalapack")
+set(SCALAPACK_VERSION "2.2.2")
 
-if(SCALAPACK_FOUND)
-  list(APPEND projects_found "scalapack")
-  add_custom_target(scalapack)
-else()
-  list(APPEND projects_to_build "scalapack")
-  set(SCALAPACK_VERSION "2.2.2")
-  externalproject_add(scalapack
-    PREFIX scalapack
-    URL ${TARFILE_DIR}/scalapack-${SCALAPACK_VERSION}.tar.gz
-    URL_MD5 e3c3d8be031425663c14f1790dc87784
-    CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
-               -D CMAKE_C_COMPILER:PATH=${CMAKE_C_COMPILER}
-	       -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
-	       -D CMAKE_Fortran_COMPILER:PATH=${CMAKE_Fortran_COMPILER}
-	       -D CMAKE_Fortran_FLAGS:STRING=${CMAKE_Fortran_FLAGS}
-               -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
-               -D BUILD_SHARED_LIBS:BOOL=${BUILD_SHARED_LIBS}
-	       -D SCALAPACK_BUILD_TESTS:BOOL=NO
-    PATCH_COMMAND patch -p1 --input=${TARFILE_DIR}/scalapack-2.2.2-cmake.patch
-    LOG_DOWNLOAD 1
-    LOG_CONFIGURE 1
-    LOG_BUILD 1
-    LOG_INSTALL 1
-  )
-  set(MUMPS_ROOT ${CMAKE_INSTALL_PREFIX})
-endif()
+truchas_tpl_external_project(
+  NAME scalapack
+  DISPLAY_NAME ScaLAPACK
+  VERSION ${SCALAPACK_VERSION}
+  URL ${TARFILE_DIR}/scalapack-${SCALAPACK_VERSION}.tar.gz
+  URL_HASH SHA256=a2f0c9180a210bf7ffe126c9cb81099cf337da1a7120ddb4cbe4894eb7b7d022
+  CMAKE_ARGS
+    -D CMAKE_C_COMPILER:PATH=${MPI_C_COMPILER}
+    -D CMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
+    -D CMAKE_Fortran_COMPILER:PATH=${MPI_Fortran_COMPILER}
+    -D CMAKE_Fortran_FLAGS:STRING=${CMAKE_Fortran_FLAGS}
+    -D SCALAPACK_BUILD_TESTS:BOOL=NO
+    -D CMAKE_POLICY_VERSION_MINIMUM=3.20
+  PATCH_COMMAND patch -p1 --input=${TARFILE_DIR}/scalapack-2.2.2-cmake.patch
+)
+set(MUMPS_ROOT ${CMAKE_INSTALL_PREFIX})
