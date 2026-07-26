@@ -17,6 +17,7 @@ else()
     URL ${TARFILE_DIR}/fvtkhdf-0.6.0.tar.gz
     URL_MD5 3f6ddf7e16edcc9efde228524971a294
     CMAKE_ARGS -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
+               -D CMAKE_PREFIX_PATH:PATH=${CMAKE_PREFIX_PATH}
                -D CMAKE_Fortran_COMPILER:PATH=${CMAKE_Fortran_COMPILER}
                -D CMAKE_Fortran_FLAGS:STRING=${CMAKE_Fortran_FLAGS}
                -D CMAKE_C_COMPILER:PATH=${CMAKE_C_COMPILER}
